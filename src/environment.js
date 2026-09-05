@@ -45,10 +45,10 @@ export function createEnvironment(scene, renderer) {
   sky.scale.setScalar(450000);
   scene.add(sky);
   const uniforms = sky.material.uniforms;
-  uniforms.turbidity.value = 5.5;
-  uniforms.rayleigh.value = 2.3;
-  uniforms.mieCoefficient.value = 0.006;
-  uniforms.mieDirectionalG.value = 0.79;
+  uniforms.turbidity.value = 2.2;
+  uniforms.rayleigh.value = 1.2;
+  uniforms.mieCoefficient.value = 0.0008;
+  uniforms.mieDirectionalG.value = 0.85;
 
   const hemi = new THREE.HemisphereLight(0xdfeeff, 0x6f6a59, 1.7);
   scene.add(hemi);
@@ -75,7 +75,7 @@ export function createEnvironment(scene, renderer) {
   envScene.background = new THREE.Color(0xb9c8d1);
   const envTarget = pmrem.fromScene(envScene, 0.03);
   scene.environment = envTarget.texture;
-  const state = { time: 14.2, weather: 'clear', phase: 3, night: false, sunElevation: 45 };
+  const state = { time: 9.5, weather: 'clear', phase: 3, night: false, sunElevation: 45 };
 
   function update({ time = state.time, weather = state.weather, phase = state.phase } = {}) {
     state.time = Number(time); state.weather = weather; state.phase = phase;
@@ -89,10 +89,10 @@ export function createEnvironment(scene, renderer) {
     sun.position.set(x, Math.max(80, y), z);
     uniforms.sunPosition.value.copy(sun.position).normalize();
     const daylight = THREE.MathUtils.clamp((solar.elevationDeg + 5) / 28, 0, 1);
-    sun.intensity = phase >= 3 ? 0.18 + 3.4 * daylight : 2.2;
-    moon.intensity = phase >= 6 ? (1 - daylight) * 0.38 : 0;
-    hemi.intensity = phase >= 3 ? 0.22 + daylight * 1.7 : 1.7;
-    ambient.intensity = phase >= 6 && state.night ? 0.25 : 0.12;
+    sun.intensity = phase >= 3 ? 0.08 + 1.35 * daylight : 1.0;
+    moon.intensity = phase >= 6 ? (1 - daylight) * 0.12 : 0;
+    hemi.intensity = phase >= 3 ? 0.1 + daylight * 0.65 : 0.65;
+    ambient.intensity = phase >= 6 && state.night ? 0.09 : 0.04;
     sun.color.set(state.time < 8 || state.time > 17 ? 0xffc78c : 0xfff2d7);
     const background = skyColorForHour(state.time);
     if (weather === 'rain') background.lerp(new THREE.Color(0x59656c), 0.67);
@@ -100,9 +100,9 @@ export function createEnvironment(scene, renderer) {
     scene.background = background;
     scene.fog.color.copy(background);
     scene.fog.density = weather === 'rain' ? 0.00046 : weather === 'haze' ? 0.00038 : 0.00018;
-    uniforms.turbidity.value = weather === 'haze' ? 11 : weather === 'rain' ? 13 : 5.5;
-    uniforms.rayleigh.value = weather === 'rain' ? 0.8 : 2.3;
-    renderer.toneMappingExposure = state.night ? 0.78 : state.time < 8 || state.time > 17 ? 0.95 : 1.05;
+    uniforms.turbidity.value = weather === 'haze' ? 6 : weather === 'rain' ? 7 : 2.2;
+    uniforms.rayleigh.value = weather === 'rain' ? 0.5 : 1.2;
+    renderer.toneMappingExposure = state.night ? 0.6 : state.time < 8 || state.time > 17 ? 0.82 : 0.9;
   }
   update();
   return { sky, sun, moon, hemi, ambient, state, update, dispose() { envTarget.dispose(); pmrem.dispose(); } };

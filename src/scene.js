@@ -8,7 +8,7 @@ import { createEnvironment } from './environment.js';
 export function createScene(host) {
   const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance', alpha: false });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
-  renderer.setSize(host.clientWidth, host.clientHeight);
+  renderer.setSize(Math.max(1, host.clientWidth), Math.max(1, host.clientHeight), false);
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -25,6 +25,7 @@ export function createScene(host) {
   const composer = new EffectComposer(renderer); const renderPass = new RenderPass(scene, camera); const bloom = new UnrealBloomPass(new THREE.Vector2(host.clientWidth, host.clientHeight), 0.36, 0.55, 0.88); composer.addPass(renderPass); composer.addPass(bloom); bloom.enabled = false;
   function resize() { const w = Math.max(1, host.clientWidth), h = Math.max(1, host.clientHeight); camera.aspect = w / h; camera.updateProjectionMatrix(); renderer.setSize(w, h, false); composer.setSize(w, h); }
   window.addEventListener('resize', resize);
+  requestAnimationFrame(resize);
   return { renderer, composer, bloom, scene, camera, controls, grid, ground, groundMat, origin, environment, resize };
 }
 

@@ -21,7 +21,7 @@ export function createUI(root, callbacks = {}) {
     <aside class="phase-panel glass-panel"><div class="panel-title">Build phases</div><div id="phaseList" class="phase-list"></div></aside>
     <aside class="control-panel glass-panel">
       <div class="panel-title">Scene controls</div>
-      <label class="control-row"><span>Time <strong id="timeValue">14:12</strong></span><input id="timeRange" type="range" min="0" max="24" step="0.05" value="14.2"></label>
+      <label class="control-row"><span>Time <strong id="timeValue">09:30</strong></span><input id="timeRange" type="range" min="0" max="24" step="0.05" value="9.5"></label>
       <label class="control-row"><span>Weather</span><select id="weatherSelect"><option value="clear">Clear</option><option value="haze">Haze</option><option value="rain">Rain</option></select></label>
       <label class="control-row"><span>Activity <strong id="activityValue">65%</strong></span><input id="activityRange" type="range" min="0" max="100" step="1" value="65"></label>
       <label class="control-row"><span>Quality</span><select id="qualitySelect"><option value="auto">Auto</option><option value="low">Low</option><option value="medium">Medium</option><option value="high" selected>High</option><option value="ultra">Ultra</option></select></label>
@@ -44,7 +44,7 @@ export function createUI(root, callbacks = {}) {
   qualitySelect.onchange=()=>callbacks.onQuality?.(qualitySelect.value); labelsToggle.onchange=()=>callbacks.onLabels?.(labelsToggle.checked);
   root.querySelector('#tourButton').onclick=()=>callbacks.onTour?.(); root.querySelector('#controlsToggle').onclick=()=>root.querySelector('.control-panel').classList.toggle('mobile-open');
   function setTimeText(hour) { let h=Math.floor(hour),m=Math.round((hour-h)*60); if(m===60){h=(h+1)%24;m=0;} root.querySelector('#timeValue').textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`; }
-  setTimeText(14.2);
+  setTimeText(9.5);
   return {
     viewport:root.querySelector('#viewport'), phaseCount:phases.length,
     setPhase(phase){ const p=Math.max(1,Math.min(phases.length,phase)); const [id,name,desc]=phases[p-1]; [...phaseList.children].forEach((el,i)=>el.classList.toggle('active',i===p-1)); root.querySelector('#phaseTitle').textContent=`${id} · ${name}`; root.querySelector('#milestoneCard').innerHTML=`<div class="eyebrow">WHAT YOU CAN VIEW AT THIS PHASE</div><h2>${id} · ${name}</h2><p>${desc}</p>`; root.dataset.phase=String(p); },

@@ -10,7 +10,7 @@ import { createQualityManager } from './performance.js';
 import { createTour, smoothCamera } from './tour.js';
 
 const app=document.querySelector('#app');
-let phase=9, time=14.2, weather='clear', activityDensity=0.65;
+let phase=9, time=9.5, weather='clear', activityDensity=0.65;
 let sceneKit, projection, manifest, cameraPresets, landmarkLayers, contextLayers, terrain, rain, streetscape, activity, quality, tour;
 let labelsVisible=true;
 
@@ -38,7 +38,7 @@ async function init(){
   streetscape=createStreetscape(projection); sceneKit.scene.add(streetscape.group);
   activity=createActivity(projection); sceneKit.scene.add(activity.group); activity.setDensity(activityDensity);
 
-  quality=createQualityManager(sceneKit,{onPreset(name,preset){sceneKit.bloom.enabled=phase>=6&&preset.bloom;activity?.setDensity(activityDensity*preset.activity);streetscape?.setDensity(preset.streetscape);ui.setDiagnostics(quality?.snapshot?.()||{effective:name,dpr:sceneKit.renderer.getPixelRatio()});}});
+  quality=createQualityManager(sceneKit,{onPreset(name,preset){sceneKit.bloom.enabled=phase>=6&&preset.bloom&&sceneKit.environment.state.sunElevation<8;activity?.setDensity(activityDensity*preset.activity);streetscape?.setDensity(preset.streetscape);ui.setDiagnostics(quality?.snapshot?.()||{effective:name,dpr:sceneKit.renderer.getPixelRatio()});}});
   quality.setMode('high');
 
   ui.setCameras(cameraPresets.presets);
@@ -73,11 +73,11 @@ function setMaterialPhase(){
 function updateEnvironment(){
   if(!sceneKit)return;
   const activeWeather=phase>=6?weather:'clear';
-  sceneKit.environment.update({time:phase>=3?time:14.2,weather:activeWeather,phase});
+  sceneKit.environment.update({time:phase>=3?time:9.5,weather:activeWeather,phase});
   const night=phase>=6&&sceneKit.environment.state.night;
   landmarkLayers?.setNight(night); streetscape?.setNight(night); streetscape?.setWetness(activeWeather==='rain'); activity?.setNight(night);
   if(rain)rain.visible=phase>=6&&activeWeather==='rain';
-  if(sceneKit.bloom)sceneKit.bloom.enabled=phase>=6&&quality?.presets?.[quality.effective]?.bloom===true;
+  if(sceneKit.bloom)sceneKit.bloom.enabled=phase>=6&&quality?.presets?.[quality.effective]?.bloom===true&&sceneKit.environment.state.sunElevation<8;
   setMaterialPhase();
 }
 
@@ -95,7 +95,7 @@ function applyPhase(){
   streetscape.group.visible=phase>=4;
   activity.group.visible=phase>=5;
   rain.visible=phase>=6&&weather==='rain';
-  sceneKit.bloom.enabled=phase>=6&&quality?.presets?.[quality.effective]?.bloom===true;
+  sceneKit.bloom.enabled=phase>=6&&quality?.presets?.[quality.effective]?.bloom===true&&sceneKit.environment.state.sunElevation<8;
   if(phase<5)activity.setDensity(0);else activity.setDensity(activityDensity*(quality?.presets?.[quality.effective]?.activity??1));
   updateEnvironment();
   if(phase===9)ui.setReleaseStatus('Release baseline · source-auditable · CI validated');
