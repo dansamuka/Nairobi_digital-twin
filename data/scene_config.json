@@ -1,0 +1,42 @@
+{
+  "baseline_date": "2026-09-05",
+  "origin": {
+    "lat": -1.2886111111,
+    "lon": 36.8230555556,
+    "crs": "EPSG:4326",
+    "anchor": "KICC"
+  },
+  "projection": {
+    "working_crs": "EPSG:32737",
+    "units": "metres",
+    "threejs_axis_mapping": {
+      "east": "+X",
+      "north": "-Z",
+      "up": "+Y"
+    }
+  },
+  "spatial_tiers": {
+    "tier_a_hero_zone": {
+      "bbox_wgs84": [36.812, -1.3005, 36.8325, -1.276],
+      "purpose": "CBD hero detail, parks, Parliament/KICC, railway station edge"
+    },
+    "tier_b_near_context": {
+      "bbox_wgs84": [36.795, -1.319, 36.84, -1.268],
+      "purpose": "Upper Hill, Museum/University edge, Ngara/river context, rail approach"
+    },
+    "tier_c_horizon": {
+      "radius_km": 15,
+      "purpose": "terrain and low-detail skyline silhouettes only"
+    }
+  },
+  "terrain": {
+    "primary": "Copernicus DEM GLO-30 where access/licence workflow permits",
+    "fallback": "Copernicus DEM GLO-90 or other legally usable DEM",
+    "vertical_exaggeration": 1.0
+  },
+  "osm": {
+    "license": "ODbL",
+    "phase1_layers": ["highway", "building", "railway", "landuse", "leisure", "natural", "waterway", "amenity", "historic"],
+    "attribution": "© OpenStreetMap contributors"
+  }
+}
