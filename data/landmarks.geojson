@@ -1,0 +1,25 @@
+{
+  "type": "FeatureCollection",
+  "name": "nairobi_phase0_landmarks",
+  "crs_note": "WGS84 / EPSG:4326. Full provenance and local-metre coordinates are in data/source_manifest.json.",
+  "features": [
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.8230555556,-1.2886111111]},"properties":{"id":"kicc","name":"Kenyatta International Convention Centre","category":"hero","status":"verified"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.8238888889,-1.2902777778]},"properties":{"id":"times_tower","name":"Times Tower","category":"hero","status":"verified"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.82,-1.29]},"properties":{"id":"parliament","name":"Parliament Buildings","category":"hero","status":"verified"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.82053,-1.29137]},"properties":{"id":"bunge_tower","name":"Bunge Tower","category":"hero","status":"partially_verified"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.82183,-1.28691]},"properties":{"id":"city_hall","name":"Nairobi City Hall","category":"hero","status":"partially_verified"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.823117,-1.287485]},"properties":{"id":"supreme_court","name":"Supreme Court Building","category":"hero","status":"partially_verified"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.8193638889,-1.2861944444]},"properties":{"id":"teleposta","name":"Teleposta Towers","category":"hero","status":"verified"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.8251805556,-1.2860277778]},"properties":{"id":"kencom","name":"KENCOM House","category":"hero","status":"partially_verified"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.8180611111,-1.2869388889]},"properties":{"id":"nyayo_house","name":"Nyayo House","category":"hero","status":"verified"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.8259388889,-1.2848888889]},"properties":{"id":"national_archives","name":"Kenya National Archives","category":"hero","status":"verified"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.8286111111,-1.2916944444]},"properties":{"id":"nairobi_station","name":"Nairobi Railway Station","category":"hero","status":"verified"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.8221944444,-1.293725]},"properties":{"id":"railway_museum","name":"Nairobi Railway Museum","category":"secondary","status":"verified"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.8205555556,-1.2872222222]},"properties":{"id":"holy_family","name":"Cathedral Basilica of the Holy Family","category":"hero","status":"verified"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.82,-1.2847222222]},"properties":{"id":"im_bank_tower","name":"I&M Bank Tower","category":"secondary","status":"verified"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.8279444444,-1.2878138889]},"properties":{"id":"afya_centre","name":"Afya Centre","category":"hero","status":"partially_verified"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.82198,-1.28974]},"properties":{"id":"harambee_house","name":"Harambee House","category":"secondary","status":"partially_verified"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.8130169444,-1.3000869444]},"properties":{"id":"britam_tower","name":"Britam Tower","category":"skyline_context","status":"verified"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.8130561111,-1.3005561111]},"properties":{"id":"uap_tower","name":"UAP Old Mutual Tower","category":"skyline_context","status":"verified"}}
+  ]
+}
