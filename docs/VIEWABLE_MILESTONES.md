@@ -1,56 +1,62 @@
-# Viewable Milestones — What You Can See at the End of Every Step
+# Viewable Milestones — Acceptance by What You Can Actually See
 
-This document is a product-facing acceptance guide. A phase/step is not considered complete merely because code exists: there must be something concrete to inspect in the viewer.
+A phase is not complete merely because code exists. The user must be able to inspect the promised visual result in the running viewer.
 
-## Phase 0 — Research & Ground Truth
+## P0 — Research & Ground Truth
 
-**At the end you can view:** the audited landmark registry, map coordinates, camera viewpoints, source confidence, scene extents, technical architecture and explicit geographic guardrails. There is not yet a finished 3D city.
+**Viewable outcome:** structured landmark registry, verified coordinates/confidence, camera viewpoints, scene extents, projection contract, source plan and explicit geographic guardrails. No finished 3D city yet.
 
-## Phase 1 — Geospatial Greybox
+## P1 — Geospatial Greybox
 
-The Phase 1 viewer exposes each sub-step as a button so you can inspect cumulative progress.
+**Viewable outcome:** a source-positioned Nairobi CBD greybox. Roads, parks, rail and building massing define the city blocks; KICC-origin coordinates and landmark proxies make relative placement inspectable. The viewer visibly reports whether city context came from live OSM or fallback geometry.
 
-| Step | Implementation | What you will be able to view |
-|---|---|---|
-| P1.1 | Project shell | A working full-screen Three.js viewer, Nairobi-toned horizon, metric grid and the KICC origin. |
-| P1.2 | Projection | Landmark pins distributed around KICC in the correct metric coordinate relationships. |
-| P1.3 | OSM context | Live OpenStreetMap-derived ways/buildings when Overpass responds; otherwise a clearly labelled fallback context. |
-| P1.4 | Terrain | A broad relief scaffold underneath the city. **Not yet survey/DEM-grade** until the DEM dataset is committed. |
-| P1.5 | Roads & parks | Major road surfaces and green/open areas so the CBD block structure becomes legible. |
-| P1.6 | Building massing | The CBD as a dense 3D urban volume, using OSM height/levels where available and deterministic proxy heights otherwise. |
-| P1.7 | Hero proxies | Recognizable greybox silhouettes for the main Nairobi anchors—especially KICC, Times Tower, Parliament, Bunge, City Hall, Teleposta, Holy Family, Britam and UAP. |
-| P1.8 | Rail | Nairobi Railway Station context and the conventional/commuter rail corridor. You should **not** see an invented SGR mainline through CBD. |
-| P1.9 | Cameras | Seven named viewpoints for civic core, Uhuru Park, KICC roof, railway edge, Times Tower, Upper Hill and Kenyatta Avenue checks. |
-| P1.10 | Gate review | All Phase 1 layers together, with data counts and FPS readout. This is the exact view used to approve geography/silhouette before Phase 2. |
+### P1 implementation-step outcomes
 
-## Phase 2 — Hero Architecture
+| Step | Viewable result |
+|---|---|
+| P1.1 | Full-screen Three.js scene, Nairobi horizon tone, KICC origin and metric reference. |
+| P1.2 | Audited landmark coordinates rendered in local metric relationships. |
+| P1.3 | OSM/Overpass context or visibly-labelled fallback context. |
+| P1.4 | Broad terrain relief scaffold. |
+| P1.5 | Major roads and green/open-space relationships. |
+| P1.6 | 3D CBD building massing. |
+| P1.7 | Grey landmark silhouettes. |
+| P1.8 | Conventional/commuter rail context without an invented CBD SGR mainline. |
+| P1.9 | Seven geographic validation cameras. |
+| P1.10 | Full greybox gate-review state with data/FPS diagnostics. |
 
-**At the end you will be able to view:** the principal landmarks no longer as generic proxies, but as architecture-specific models with the correct major façade divisions, roof/crown shapes, footprint orientation and recognizable proportions. From the validation cameras, KICC, Times Tower, Parliament/Bunge, City Hall, Teleposta and other priority buildings should be identifiable without labels.
+## P2 — Hero Architecture
 
-## Phase 3 — Materials & Daylight
+**Viewable outcome:** generic landmark boxes are replaced by architecture-specific neutral models. KICC shows its cylindrical/ribbed tower, observation/crown structure and base halls; Times Tower uses a curtain-wall tower/fins/mast composition; Parliament and City Hall have their civic massing and clock-tower forms; Teleposta, Holy Family, Britam and UAP have distinct silhouette logic.
 
-**At the end you will be able to view:** a convincing daytime Nairobi scene with PBR concrete/glass/metal, Nairobi daylight, accurate solar direction, proper shadows, sky/environment reflections and physically plausible tonal response. Screenshots should begin to feel photographic rather than like a CAD model.
+**Acceptance:** principal anchors should be distinguishable by form even while neutral-grey.
 
-## Phase 4 — Streetscape & Vegetation
+## P3 — Materials & Daylight
 
-**At the end you will be able to view:** sidewalks, medians, trees, streetlights, traffic lights, signage, park detail and street furniture at useful street/medium distances. Street-level cameras should no longer feel empty.
+**Viewable outcome:** the neutral P2 city gains glass/concrete/stone/metal PBR response, equatorial solar motion, atmospheric sky, directional shadows and environment reflections. Moving the time slider visibly changes sun direction, exposure and sky.
 
-## Phase 5 — Urban Activity
+**Acceptance:** a clear daytime view should read as a materially plausible city rather than a CAD greybox.
 
-**At the end you will be able to view:** moving cars, matatus, boda-bodas, pedestrians and commuter-rail activity. Density changes should be visible and the city should feel occupied rather than static.
+## P4 — Streetscape & Vegetation
 
-## Phase 6 — Night, Weather & Water
+**Viewable outcome:** trees, streetlights, benches, flags, park furniture and a reflective Uhuru Park water body appear. Street/medium-distance cameras gain depth and human scale.
 
-**At the end you will be able to view:** day/night states, illuminated buildings and streets, vehicle lights, rain/wet-road response, atmospheric haze and improved water surfaces. You should be able to compare daylight, golden-hour, night and rain moods from the same camera.
+## P5 — Urban Activity
 
-## Phase 7 — Performance Pass
+**Viewable outcome:** cars, matatus, boda-bodas, pedestrians and commuter rail move continuously. The Activity slider visibly changes density.
 
-**At the end you will be able to view:** essentially the same visual richness as Phase 6, but with a diagnostics panel showing the optimized result—stable frame rate, reduced draw calls, LOD transitions, sector loading and quality presets. Performance gains should be observable rather than claimed.
+## P6 — Night, Weather & Water
 
-## Phase 8 — UX & Polish
+**Viewable outcome:** Clear/Haze/Rain states become available; night activates emissive windows and street lamps; rain particles appear; road surfaces darken/become more reflective; bloom is enabled on capable quality modes; the same camera can be compared across afternoon, golden hour, night and rain.
 
-**At the end you will be able to view/use:** a product-quality interface with camera presets, landmark inspector, time/weather/activity controls, quality presets, source/credits panel, loading state and a guided tourist mode.
+## P7 — Performance
 
-## Phase 9 — QA & Release
+**Viewable outcome:** Auto/Low/Medium/High/Ultra presets change DPR, shadow resolution, activity/streetscape density and bloom. The diagnostics panel exposes FPS, draw calls and triangle count so optimization is observable.
 
-**At the end you will be able to view:** the final deployable Nairobi Digital Twin release, its acceptance checklist, known limitations, source/attribution information and reproducible release build. This is the version suitable for public sharing.
+## P8 — Product UX
+
+**Viewable outcome:** click a landmark for its source/confidence inspector; use named geographic cameras; start/stop the guided tour; control time, weather, activity, labels and quality from the product UI.
+
+## P9 — QA & Release
+
+**Viewable outcome:** the full cumulative release baseline with explicit OSM/live-fallback status, performance diagnostics, source attribution, geographic caveats and a release badge. This is the public-shareable v1 baseline.
