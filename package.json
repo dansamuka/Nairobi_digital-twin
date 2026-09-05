@@ -1,13 +1,13 @@
 {
   "name": "nairobi-digital-twin",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "check": "node scripts/validate-data.mjs && node --check src/main.js && node --check src/scene.js && node --check src/geo.js && node --check src/landmarks.js && node --check src/osm.js && node --check src/ui.js"
+    "check": "node scripts/validate-data.mjs && node --check src/main.js && node --check src/scene.js && node --check src/environment.js && node --check src/geo.js && node --check src/landmarks.js && node --check src/osm.js && node --check src/streetscape.js && node --check src/activity.js && node --check src/performance.js && node --check src/tour.js && node --check src/ui.js"
   },
   "dependencies": {
     "proj4": "2.22.0",
