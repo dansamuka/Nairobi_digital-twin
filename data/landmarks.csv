@@ -1,0 +1,19 @@
+id,canonical_name,category,lat,lon,status,location_confidence,local_x_m,local_z_m
+kicc,Kenyatta International Convention Centre,hero,-1.2886111111,36.8230555556,verified,high,0.0,-0.0
+times_tower,Times Tower,hero,-1.2902777778,36.8238888889,verified,high,92.931,184.272
+parliament,Parliament Buildings,hero,-1.29,36.82,verified,high,-340.037,153.918
+bunge_tower,Bunge Tower,hero,-1.29137,36.82053,partially_verified,high,-280.903,305.404
+city_hall,Nairobi City Hall,hero,-1.28691,36.82183,partially_verified,high,-136.599,-188.045
+supreme_court,Supreme Court Building,hero,-1.287485,36.823117,partially_verified,high,6.734,-124.566
+teleposta,Teleposta Towers,hero,-1.2861944444,36.8193638889,verified,high,-411.214,-266.959
+kencom,KENCOM House,hero,-1.2860277778,36.8251805556,partially_verified,high,236.328,-285.947
+nyayo_house,Nyayo House,hero,-1.2869388889,36.8180611111,verified,high,-556.18,-184.491
+national_archives,Kenya National Archives,hero,-1.2848888889,36.8259388889,verified,high,320.644,-411.992
+nairobi_station,Nairobi Railway Station,hero,-1.2916944444,36.8286111111,verified,high,618.778,340.521
+railway_museum,Nairobi Railway Museum,secondary,-1.293725,36.8221944444,verified,high,-95.381,565.734
+holy_family,Cathedral Basilica of the Holy Family,hero,-1.2872222222,36.8205555556,verified,high,-278.451,-153.388
+im_bank_tower,I&M Bank Tower,secondary,-1.2847222222,36.82,verified,high,-340.536,-429.863
+afya_centre,Afya Centre,hero,-1.2878138889,36.8279444444,partially_verified,high,544.193,-88.646
+harambee_house,Harambee House,secondary,-1.28974,36.82198,partially_verified,high,-119.632,124.97
+britam_tower,Britam Tower,skyline_context,-1.3000869444,36.8130169444,verified,high,-1116.485,1270.318
+uap_tower,UAP Old Mutual Tower,skyline_context,-1.3005561111,36.8130561111,verified,high,-1112.08,1322.21
