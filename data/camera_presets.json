@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "presets": [
+    {"id":"city_square_civic_core","name":"City Square Civic Core","anchor_wgs84":[36.82242,-1.28783],"eye_height_m":1.7,"target_ids":["kicc","city_hall","supreme_court"],"purpose":"Ground-level civic-core recognition and scale"},
+    {"id":"uhuru_park_skyline","name":"Uhuru Park Skyline","anchor_wgs84":[36.8148,-1.289],"eye_height_m":3.0,"target_ids":["kicc","teleposta","times_tower"],"purpose":"Classic park-to-CBD skyline relationship"},
+    {"id":"kicc_rooftop","name":"KICC Rooftop","anchor_wgs84":[36.8230556,-1.2886111],"eye_height_m":105.0,"target_ids":["parliament","city_hall","teleposta","national_archives"],"purpose":"Aerial geographic validation of civic blocks"},
+    {"id":"railway_forecourt","name":"Railway Forecourt","anchor_wgs84":[36.8282,-1.2916],"eye_height_m":2.0,"target_ids":["times_tower","kicc","afya_centre"],"purpose":"Rail corridor and southeast CBD relationship"},
+    {"id":"haile_selassie_times","name":"Haile Selassie / Times Tower","anchor_wgs84":[36.826,-1.292],"eye_height_m":2.2,"target_ids":["times_tower","kicc"],"purpose":"Validate Times Tower/KICC relative placement"},
+    {"id":"upper_hill_to_cbd","name":"Upper Hill to CBD","anchor_wgs84":[36.813,-1.303],"eye_height_m":35.0,"target_ids":["britam_tower","uap_tower","kicc"],"purpose":"Keep Upper Hill and CBD as distinct but connected skyline clusters"},
+    {"id":"kenyatta_avenue_west","name":"Kenyatta Avenue West","anchor_wgs84":[36.8145,-1.2866],"eye_height_m":2.0,"target_ids":["nyayo_house","teleposta","im_bank_tower"],"purpose":"Validate Kenyatta Avenue street wall and western CBD approach"}
+  ]
+}
