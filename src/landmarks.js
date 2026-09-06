@@ -2,9 +2,9 @@ import * as THREE from 'three';
 
 const H = {
   kicc: 105, times_tower: 140, parliament: 38, bunge_tower: 125,
-  city_hall: 48, supreme_court: 30, teleposta: 120, kencom: 103,
+  city_hall: 50, supreme_court: 30, teleposta: 120, kencom: 103,
   nyayo_house: 84, national_archives: 26, nairobi_station: 20,
-  railway_museum: 16, holy_family: 48, im_bank_tower: 99,
+  railway_museum: 16, holy_family: 68, im_bank_tower: 99,
   afya_centre: 70, harambee_house: 62, britam_tower: 200, uap_tower: 163
 };
 
@@ -85,11 +85,16 @@ function createKicc() {
     const a = i / 24 * Math.PI * 2; const rib = box(1.05, 82, 1.8, std(0x7e6b5a, 0.85), 44);
     rib.position.set(Math.cos(a) * 18.3, 44, Math.sin(a) * 18.3); rib.rotation.y = -a; g.add(rib);
   }
-  const obs = cyl(22.8, 8, win, 48, 90); g.add(obs);
-  const crown = cyl(27, 7, dark, 48, 97); g.add(crown);
+  const obs = cyl(19.5, 8, win, 48, 90); g.add(obs);
+  // Helipad: a wide disc cantilevering out from the tower on a cone-frustum flare — KICC's signature silhouette.
+  const padGeo = new THREE.CylinderGeometry(27, 19.5, 6, 48); const pad = new THREE.Mesh(padGeo, dark); pad.position.y = 97; pad.castShadow = true; g.add(pad);
+  const rim = cyl(27.3, 0.6, std(0xd9d3c4, 0.55), 48, 100.3); g.add(rim);
   const mast = cyl(1.6, 10, dark, 12, 105); g.add(mast);
-  const hall = cyl(48, 11, std(0xb19a80, 0.9), 40, 5.5); hall.scale.z = 0.72; hall.position.x = -23; hall.position.z = 27; g.add(hall);
-  const amph = cyl(32, 5, std(0xa58c71, 0.94), 40, 2.5); amph.scale.z = 0.55; amph.position.set(30, 2.5, 20); g.add(amph);
+  // Plenary Hall: stacked cuboid massing (per source, the hall itself is boxy, not conical) beside the tower base.
+  const hallLower = box(46, 9, 34, std(0xb19a80, 0.9), 4.5); hallLower.position.set(-24, 4.5, 26); g.add(hallLower);
+  const hallUpper = box(33, 8, 25, std(0xa88a68, 0.9), 12.5); hallUpper.position.set(-24, 12.5, 26); g.add(hallUpper);
+  // Amphitheatre: open-air stepped seating in the round, cone-shaped in profile.
+  const amphGeo = new THREE.CylinderGeometry(6, 34, 9, 40); const amph = new THREE.Mesh(amphGeo, std(0xa58c71, 0.94)); amph.position.set(30, 4.5, 18); amph.scale.z = 0.62; amph.castShadow = true; g.add(amph);
   addRoofDetails(g, 18, 102); return g;
 }
 function createTimesTower() {
@@ -118,16 +123,19 @@ function createBunge() {
   const crown = box(54, 8, 38, std(0x4d585b, 0.48, 0.18), 120); g.add(crown); emissiveWindows(g, 46, 106, 34, 8, 19, 5); return g;
 }
 function createCityHall() {
-  const g = new THREE.Group(); const stone = std(0xbba17f, 0.9); const trim = std(0xd6c2a0, 0.92); const roof = std(0x665e50, 0.8);
-  g.add(box(96, 24, 56, stone, 12)); const tower = box(19, 50, 19, stone, 25); tower.position.set(8, 25, 3); g.add(tower);
-  const cap = cone(13, 12, roof, 4, 56); cap.position.set(8, 56, 3); cap.rotation.y = Math.PI / 4; g.add(cap);
+  // Neo-classical: smooth dressed stone in white lime plaster, Mangalore clay-tile roof, English clock tower ~165 ft (50 m).
+  const g = new THREE.Group(); const stone = std(0xd9d2bb, 0.85); const trim = std(0xf1e9d6, 0.9); const roof = std(0x8a4a3a, 0.85);
+  g.add(box(96, 24, 56, stone, 12)); const tower = box(17, 50, 17, stone, 25); tower.position.set(8, 25, 3); g.add(tower);
+  const clockFace = std(0xf4ecd8, 0.4, 0.05); const face = box(8, 8, 0.6, clockFace, 42); face.position.set(8, 42, 12); g.add(face);
+  const cap = cone(12, 13, roof, 4, 57); cap.position.set(8, 57, 3); cap.rotation.y = Math.PI / 4; g.add(cap);
   for (let i = 0; i < 8; i++) { const c = cyl(1.1, 11, trim, 12, 5.5); c.position.set(-30 + i * 8, 5.5, 30); g.add(c); }
   emissiveWindows(g, 82, 16, 56, 10, 4, 4); return g;
 }
 function createSupremeCourt() {
-  const g = new THREE.Group(); const stone = std(0xb7a88f, 0.9); g.add(box(70, 22, 43, stone, 11));
-  const portico = box(34, 15, 7, std(0xd0c0a6, 0.92), 7.5); portico.position.z = 25; g.add(portico);
-  for (let i = 0; i < 5; i++) { const c = cyl(1.25, 13, std(0xd7c8ad, 0.92), 14, 6.5); c.position.set(-12 + i * 6, 6.5, 29); g.add(c); }
+  // Same neo-classical civic-quadrangle palette as City Hall opposite it on City Hall Way.
+  const g = new THREE.Group(); const stone = std(0xd7cfb7, 0.87); g.add(box(70, 22, 43, stone, 11));
+  const portico = box(34, 15, 7, std(0xf1e9d4, 0.9), 7.5); portico.position.z = 25; g.add(portico);
+  for (let i = 0; i < 5; i++) { const c = cyl(1.25, 13, std(0xf6eed9, 0.9), 14, 6.5); c.position.set(-12 + i * 6, 6.5, 29); g.add(c); }
   return g;
 }
 function createTeleposta() {
@@ -140,13 +148,27 @@ function createHolyFamily() {
   const g = new THREE.Group(); const stone = std(0xc2b59c, 0.93); const roof = std(0x6e6d68, 0.78, 0.06);
   g.add(box(76, 25, 48, stone, 12.5)); const nave = box(40, 34, 40, stone, 17); nave.position.z = -8; g.add(nave);
   const roof1 = cone(35, 19, roof, 4, 39); roof1.scale.z = 0.72; roof1.rotation.y = Math.PI / 4; roof1.position.z = -8; g.add(roof1);
-  const tower = box(14, 45, 14, stone, 22.5); tower.position.set(-28, 22.5, 0); g.add(tower); const spire = cone(10, 18, roof, 4, 54); spire.position.set(-28, 54, 0); spire.rotation.y = Math.PI / 4; g.add(spire); return g;
+  const tower = box(14, 48, 14, stone, 24); tower.position.set(-28, 24, 0); g.add(tower); const spire = cone(10, 20, roof, 4, 58); spire.position.set(-28, 58, 0); spire.rotation.y = Math.PI / 4; g.add(spire); return g;
 }
 function createBritam() {
-  const g = new THREE.Group(); const glassM = glass(0x527985); const frame = std(0x526266, 0.44, 0.2);
-  const geo = new THREE.CylinderGeometry(25, 42, 183, 5, 1, false); const m = new THREE.Mesh(geo, glassM); m.position.y = 91.5; m.rotation.y = 0.34; m.castShadow = true; g.add(m);
-  const crown = cone(27, 34, frame, 5, 197); crown.rotation.y = 0.34; g.add(crown);
-  for (let i = 0; i < 5; i++) { const a = i / 5 * Math.PI * 2 + 0.34; const fin = box(1.2, 176, 1.2, frame, 90); fin.position.x = Math.cos(a) * 31; fin.position.z = Math.sin(a) * 31; g.add(fin); }
+  // Britam Tower: a square-plan prism tapering from a wide base to a narrow two-sided ridge roof,
+  // topped by a 60 m mast carrying three helical wind turbines — its documented, distinctive silhouette.
+  const g = new THREE.Group(); const glassM = glass(0x2c3033); const frame = std(0x32373a, 0.4, 0.25);
+  const bodyH = 122;
+  const bodyGeo = new THREE.CylinderGeometry(14, 30, bodyH, 4, 1, false);
+  const body = new THREE.Mesh(bodyGeo, glassM); body.position.y = bodyH / 2; body.rotation.y = Math.PI / 4; body.castShadow = true; g.add(body);
+  const roofGeo = new THREE.CylinderGeometry(0.4, 14, 16, 4, 1, false);
+  const roof = new THREE.Mesh(roofGeo, frame); roof.position.y = bodyH + 8; roof.rotation.y = Math.PI / 4; g.add(roof);
+  for (let i = 0; i < 4; i++) {
+    const a = i / 4 * Math.PI * 2 + Math.PI / 4; const fin = box(1.3, bodyH, 1.3, frame, bodyH / 2);
+    fin.position.x = Math.cos(a) * 21.5; fin.position.z = Math.sin(a) * 21.5; g.add(fin);
+  }
+  const mastBase = bodyH + 16;
+  const mast = cyl(0.9, 60, std(0x2b2e2f, 0.4, 0.5), 10, mastBase + 30); g.add(mast);
+  for (let i = 0; i < 3; i++) {
+    const turbine = cyl(0.32, 8, std(0xd9dcdd, 0.5, 0.3), 10, mastBase + 38 + i * 7);
+    turbine.rotation.z = i * 0.7; g.add(turbine);
+  }
   return g;
 }
 function createUap() {
@@ -155,16 +177,41 @@ function createUap() {
   const crown = cone(27, 20, std(0x405b65, 0.43, 0.22), 4, 164); crown.rotation.y = Math.PI / 4 - 0.11; g.add(crown); emissiveWindows(g, 42, 142, 36, 8, 22, 6); return g;
 }
 function createNationalArchives() {
-  const g = new THREE.Group(); const concrete = std(0x9a8b76, 0.94); g.add(box(58, 25, 38, concrete, 12.5));
-  for (let i = 0; i < 9; i++) { const fin = box(1.3, 19, 1.4, std(0x7a6d5f, 0.9), 13); fin.position.set(-23 + i * 5.8, 13, 20); g.add(fin); } return g;
+  // Former National Bank of India HQ (1931): neo-classical, ground + 2 upper floors, grand columned entrance.
+  const g = new THREE.Group(); const stone = std(0xcfc3a3, 0.88); const trim = std(0xe9dfc1, 0.9);
+  g.add(box(58, 22, 38, stone, 11));
+  const cornice = box(26, 2, 8, trim, 20.5); cornice.position.z = 19.5; g.add(cornice);
+  for (let i = 0; i < 6; i++) { const c = cyl(1.05, 12, trim, 14, 6); c.position.set(-9 + i * 3.6, 6, 22); g.add(c); }
+  return g;
 }
 function createStation() {
+  // Colonial rectilinear stone station: post-beam-pediment facade with six front columns, Roman-arch openings.
   const g = new THREE.Group(); const warm = std(0xa88e70, 0.93); g.add(box(105, 14, 28, warm, 7));
-  const center = box(38, 21, 32, std(0xb49b7d, 0.92), 10.5); g.add(center); const roof = cone(24, 10, std(0x5d5b54, 0.8), 4, 25); roof.scale.z = 0.72; roof.rotation.y = Math.PI / 4; g.add(roof); return g;
+  const center = box(38, 21, 32, std(0xb49b7d, 0.92), 10.5); g.add(center); const roof = cone(24, 10, std(0x5d5b54, 0.8), 4, 25); roof.scale.z = 0.72; roof.rotation.y = Math.PI / 4; g.add(roof);
+  const trim = std(0xd6c6a8, 0.88);
+  for (let i = 0; i < 6; i++) { const c = cyl(0.85, 8, trim, 12, 4); c.position.set(-40 + i * 16, 4, 14.6); g.add(c); }
+  return g;
+}
+function createNyayoHouse() {
+  // Nyayo House: brutalist "doubled-H" plan — three rounded-corner slab towers linked by short corridors,
+  // the two outer towers dull orange, the core tower a darker brown.
+  const g = new THREE.Group(); const h = H.nyayo_house; const w = 15, d = 12.5;
+  const orange = std(0xa8592d, 0.8, 0.05); const core = std(0x5e5044, 0.84, 0.05);
+  function slab(mat, x) {
+    const grp = new THREE.Group();
+    grp.add(box(w, h, d, mat, h / 2));
+    const cap1 = cyl(d / 2, h, mat, 16, h / 2); cap1.position.set(-w / 2, 0, 0); grp.add(cap1);
+    const cap2 = cap1.clone(); cap2.position.set(w / 2, 0, 0); grp.add(cap2);
+    grp.position.x = x; g.add(grp); emissiveWindows(grp, w * 0.82, h * 0.86, d, 4, Math.max(6, Math.round(h / 6)), 4); return grp;
+  }
+  slab(core, 0); slab(orange, -27); slab(orange, 27);
+  const link1 = box(27, 7, 5.5, core, 3.5); link1.position.x = -13.5; g.add(link1);
+  const link2 = box(27, 7, 5.5, core, 3.5); link2.position.x = 13.5; g.add(link2);
+  addRoofDetails(g, w, h); return g;
 }
 function defaultTower(id) {
   const h = H[id] ?? 55; const w = Math.max(24, Math.min(56, h * 0.35)); const g = new THREE.Group();
-  const mat = id === 'nyayo_house' ? std(0x997b65, 0.82) : id === 'afya_centre' ? std(0x8c7e70, 0.84) : glass(id === 'im_bank_tower' ? 0x5f6d75 : 0x667a80);
+  const mat = id === 'afya_centre' ? std(0x8c7e70, 0.84) : glass(id === 'im_bank_tower' ? 0x5f6d75 : 0x667a80);
   g.add(box(w, h, w * 0.72, mat, h / 2)); emissiveWindows(g, w * 0.9, h * 0.86, w * 0.72, 7, Math.max(4, Math.round(h / 7)), 4); addRoofDetails(g, w, h); return g;
 }
 function createDetailed(id) {
@@ -172,6 +219,7 @@ function createDetailed(id) {
   if (id === 'bunge_tower') return createBunge(); if (id === 'city_hall') return createCityHall(); if (id === 'supreme_court') return createSupremeCourt();
   if (id === 'teleposta') return createTeleposta(); if (id === 'holy_family') return createHolyFamily(); if (id === 'britam_tower') return createBritam();
   if (id === 'uap_tower') return createUap(); if (id === 'national_archives') return createNationalArchives(); if (id === 'nairobi_station') return createStation();
+  if (id === 'nyayo_house') return createNyayoHouse();
   return defaultTower(id);
 }
 function createGreyProxy(id) {
