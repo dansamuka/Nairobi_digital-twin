@@ -20,6 +20,8 @@
     {"type":"Feature","geometry":{"type":"Point","coordinates":[36.8279444444,-1.2878138889]},"properties":{"id":"afya_centre","name":"Afya Centre","category":"hero","status":"partially_verified"}},
     {"type":"Feature","geometry":{"type":"Point","coordinates":[36.82198,-1.28974]},"properties":{"id":"harambee_house","name":"Harambee House","category":"secondary","status":"partially_verified"}},
     {"type":"Feature","geometry":{"type":"Point","coordinates":[36.8130169444,-1.3000869444]},"properties":{"id":"britam_tower","name":"Britam Tower","category":"skyline_context","status":"verified"}},
-    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.8130561111,-1.3005561111]},"properties":{"id":"uap_tower","name":"UAP Old Mutual Tower","category":"skyline_context","status":"verified"}}
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.8130561111,-1.3005561111]},"properties":{"id":"uap_tower","name":"UAP Old Mutual Tower","category":"skyline_context","status":"verified"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.813614,-1.299454]},"properties":{"id":"kenya_re_towers","name":"Kenya Re Towers","category":"skyline_context","status":"verified"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[36.812445,-1.300809]},"properties":{"id":"cic_pension_towers","name":"CIC Pension Towers","category":"skyline_context","status":"verified"}}
   ]
 }

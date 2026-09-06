@@ -5,7 +5,8 @@ const H = {
   city_hall: 50, supreme_court: 30, teleposta: 120, kencom: 103,
   nyayo_house: 84, national_archives: 26, nairobi_station: 20,
   railway_museum: 16, holy_family: 68, im_bank_tower: 99,
-  afya_centre: 70, harambee_house: 62, britam_tower: 200, uap_tower: 163
+  afya_centre: 70, harambee_house: 62, britam_tower: 200, uap_tower: 163,
+  kenya_re_towers: 105, cic_pension_towers: 120
 };
 
 const COLORS = {
@@ -93,8 +94,17 @@ function createKicc() {
   // Plenary Hall: stacked cuboid massing (per source, the hall itself is boxy, not conical) beside the tower base.
   const hallLower = box(46, 9, 34, std(0xb19a80, 0.9), 4.5); hallLower.position.set(-24, 4.5, 26); g.add(hallLower);
   const hallUpper = box(33, 8, 25, std(0xa88a68, 0.9), 12.5); hallUpper.position.set(-24, 12.5, 26); g.add(hallUpper);
-  // Amphitheatre: open-air stepped seating in the round, cone-shaped in profile.
-  const amphGeo = new THREE.CylinderGeometry(6, 34, 9, 40); const amph = new THREE.Mesh(amphGeo, std(0xa58c71, 0.94)); amph.position.set(30, 4.5, 18); amph.scale.z = 0.62; amph.castShadow = true; g.add(amph);
+  // Conference Centre: a round drum topped by a cable-supported tented dome — KICC's other signature volume.
+  const domeGroup = new THREE.Group(); domeGroup.position.set(34, 0, 22);
+  const domeWallMat = std(0xc9bda0, 0.85); const domeRoofMat = std(0xb3a488, 0.55, 0.1);
+  domeGroup.add(cyl(28, 8, domeWallMat, 40, 4));
+  const domeRoof = cone(30, 12, domeRoofMat, 40, 14); domeGroup.add(domeRoof);
+  for (let i = 0; i < 16; i++) {
+    const a = i / 16 * Math.PI * 2; const rib = box(0.5, 12.5, 1, std(0x54493c, 0.5, 0.3), 0);
+    rib.position.set(Math.cos(a) * 15, 8.5, Math.sin(a) * 15); rib.rotation.y = -a; rib.rotation.x = -0.55; domeGroup.add(rib);
+  }
+  const finial = cyl(0.5, 5, std(0x4a4136, 0.4, 0.4), 8, 22.5); domeGroup.add(finial);
+  g.add(domeGroup);
   addRoofDetails(g, 18, 102); return g;
 }
 function createTimesTower() {
@@ -172,9 +182,64 @@ function createBritam() {
   return g;
 }
 function createUap() {
-  const g = new THREE.Group(); const glassM = glass(0x537985); const fin = std(0x8f9999, 0.54, 0.12);
-  const body = box(46, 154, 36, glassM, 77); body.rotation.y = -0.11; g.add(body); addVerticalFins(g, 46, 154, 0.7, 9, fin, 18.4);
-  const crown = cone(27, 20, std(0x405b65, 0.43, 0.22), 4, 164); crown.rotation.y = Math.PI / 4 - 0.11; g.add(crown); emissiveWindows(g, 42, 142, 36, 8, 22, 6); return g;
+  // UAP Tower: explicitly modeled on the Empire State Building — stepped setback massing,
+  // a central vertical glass spine, and a slender crowning spire (Kenya's first rooftop helipad).
+  const g = new THREE.Group(); const glassM = glass(0x537985); const fin = std(0x8f9999, 0.54, 0.12); const frame = std(0x445055, 0.4, 0.2);
+  const tiers = [
+    { w: 44, d: 34, h: 58 }, { w: 36, d: 28, h: 34 }, { w: 28, d: 22, h: 26 },
+    { w: 20, d: 16, h: 15 }, { w: 12, d: 11, h: 9 }
+  ];
+  let y = 0;
+  for (const t of tiers) {
+    const cy = y + t.h / 2;
+    g.add(box(t.w, t.h, t.d, glassM, cy));
+    const count = Math.max(4, Math.round(t.w / 4.5));
+    for (let i = 0; i < count; i++) {
+      const fx = -t.w / 2 + (i + 0.5) * t.w / count;
+      const finMesh = box(0.5, t.h, 0.55, fin, cy); finMesh.position.x = fx; finMesh.position.z = t.d / 2 + 0.25; g.add(finMesh);
+    }
+    y += t.h;
+  }
+  const spine = box(4.5, y - 6, 1.2, frame, (y - 6) / 2); spine.position.z = tiers[0].d / 2 + 0.7; g.add(spine);
+  const helipad = cyl(6, 0.6, std(0xd9d3c4, 0.55), 32, y + 0.3); g.add(helipad);
+  const mast = cyl(1.1, 12, frame, 10, y + 6); g.add(mast);
+  emissiveWindows(g, 40, y - 10, 34, 8, 26, 4);
+  addRoofDetails(g, 20, y); return g;
+}
+function createKenyaRe() {
+  // Kenya Re Towers: round modernist/brutalist tower, vertical glazing fins, layered flared crown.
+  const g = new THREE.Group(); const concrete = std(0x9a8f7c, 0.8); const win = glass(0x4d6b72); const fin = std(0x7d7263, 0.75, 0.06);
+  const bodyH = H.kenya_re_towers - 14;
+  g.add(cyl(17, bodyH, win, 40, bodyH / 2));
+  const count = 28;
+  for (let i = 0; i < count; i++) {
+    const a = i / count * Math.PI * 2; const rib = box(0.7, bodyH, 1.1, fin, bodyH / 2);
+    rib.position.set(Math.cos(a) * 17.1, bodyH / 2, Math.sin(a) * 17.1); rib.rotation.y = -a; g.add(rib);
+  }
+  const crown1 = new THREE.Mesh(new THREE.CylinderGeometry(21, 17, 6, 40), concrete); crown1.position.y = bodyH + 3; crown1.castShadow = true; g.add(crown1);
+  const crown2 = new THREE.Mesh(new THREE.CylinderGeometry(15, 21, 5, 40), concrete); crown2.position.y = bodyH + 8.5; crown2.castShadow = true; g.add(crown2);
+  const mast = cyl(0.6, 6, std(0x4a4a44, 0.4, 0.4), 8, bodyH + 14); g.add(mast);
+  addRoofDetails(g, 18, bodyH + 11); return g;
+}
+function createCicPensionTowers() {
+  // CIC Pension Towers: podium base, central glass core, twin tapering sculpted "wing" stacks, angular crystalline spire.
+  const g = new THREE.Group(); const glassM = glass(0x3f5b66); const wingMat = std(0xcfd6d3, 0.42, 0.18);
+  const podiumH = 20; const coreH = H.cic_pension_towers - podiumH - 14;
+  g.add(box(60, podiumH, 50, std(0xb9c0bb, 0.7, 0.05), podiumH / 2));
+  g.add(box(20, coreH, 16, glassM, podiumH + coreH / 2));
+  for (const side of [-1, 1]) {
+    const segs = 6; let wy = podiumH;
+    for (let i = 0; i < segs; i++) {
+      const t = i / segs; const segH = coreH / segs;
+      const w = 9 * (1 - t * 0.8); const d = 15 * (1 - t * 0.55);
+      const seg = box(w, segH, d, wingMat, wy + segH / 2); seg.position.x = side * (10 + w / 2); g.add(seg);
+      wy += segH;
+    }
+  }
+  const spireH = 14; const spire = cone(6, spireH, std(0x9fb0ac, 0.35, 0.25), 4, podiumH + coreH + spireH / 2);
+  spire.rotation.y = Math.PI / 4; g.add(spire);
+  emissiveWindows(g, 18, coreH * 0.9, 16, 5, Math.max(6, Math.round(coreH / 6)), podiumH + 2);
+  addRoofDetails(g, 20, podiumH + coreH); return g;
 }
 function createNationalArchives() {
   // Former National Bank of India HQ (1931): neo-classical, ground + 2 upper floors, grand columned entrance.
@@ -220,6 +285,7 @@ function createDetailed(id) {
   if (id === 'teleposta') return createTeleposta(); if (id === 'holy_family') return createHolyFamily(); if (id === 'britam_tower') return createBritam();
   if (id === 'uap_tower') return createUap(); if (id === 'national_archives') return createNationalArchives(); if (id === 'nairobi_station') return createStation();
   if (id === 'nyayo_house') return createNyayoHouse();
+  if (id === 'kenya_re_towers') return createKenyaRe(); if (id === 'cic_pension_towers') return createCicPensionTowers();
   return defaultTower(id);
 }
 function createGreyProxy(id) {
